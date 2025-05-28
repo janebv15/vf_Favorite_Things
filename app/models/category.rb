@@ -9,4 +9,5 @@
 #  updated_at            :datetime         not null
 #
 class Category < ApplicationRecord
+    has_many  :favorite_things, class_name: "Recommendation", foreign_key: "category_id", dependent: :destroy
 end

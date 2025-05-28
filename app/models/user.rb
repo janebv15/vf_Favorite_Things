@@ -29,13 +29,8 @@ class User < ApplicationRecord
   has_many  :sent_requests, class_name: "FollowRequest", foreign_key: "sender_id", dependent: :destroy
   has_many  :recieved_requests, class_name: "FollowRequest", foreign_key: "recipient_id", dependent: :destroy
 
-  belongs_to :user, required: true, class_name: "User", foreign_key: "user_id"
-  belongs_to :category, required: true, class_name: "Category", foreign_key: "category_id", counter_cache: :favorite_things_count
-  validates :category_id, presence: true
+  
 
-  has_many  :favorite_things, class_name: "Recommendation", foreign_key: "category_id", dependent: :destroy
 
-  belongs_to :sender, required: true, class_name: "User", foreign_key: "sender_id"
-  belongs_to :recipient, required: true, class_name: "User", foreign_key: "recipient_id"
   
 end

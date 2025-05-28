@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
   # Routes for the Follow request resource:
+#Home landing page -->>> need to create
 
+
+
+
+#Profile page -->>> need to create
+
+
+
+#-----------
   # CREATE
   post("/insert_follow_request", { :controller => "follow_requests", :action => "create" })
           
@@ -56,11 +65,20 @@ Rails.application.routes.draw do
 
   #------------------------------
 
-  devise_for :users
+  devise_for(:users)
 
   # This is a blank app! Pick your first screen, build out the RCAV, and go from there. E.g.:
 
-  # get "/your_first_screen" => "pages#first"
+  # get "/your_first_screen" => "pages#first" # get / in home controller def index
   root to: "home#index"
   
+
+  # profile
+
+  get("/profile/:id", { 
+  :controller => "home", 
+  :action     => "profile", 
+  :as         => "profile" 
+})
+
 end
