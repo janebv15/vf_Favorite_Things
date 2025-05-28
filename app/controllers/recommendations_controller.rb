@@ -1,60 +1,57 @@
 class RecommendationsController < ApplicationController
+  before_action :load_categories, { :only => [:index, :create] }
+
   def index
-    matching_recommendations = Recommendation.all
+    @list_of_recommendations = Recommendation.all
+    render({ :template => "recommendations/index" })
+   end
 
-    @list_of_recommendations = matching_recommendations.order({ :created_at => :desc })
-
+  def new
+    @recommendation = Recommendation.new
     render({ :template => "recommendations/index" })
   end
 
-  def show
-    the_id = params.fetch("path_id")
+def create
+  the_name        = params.fetch("query_name")
+  the_description = params.fetch("query_description")
+  the_category_id = params.fetch("category_id")
 
+  matching_category = Category.where({ :id => the_category_id }).at(0)
+  existing_count    = Recommendation.where({ :category_id => the_category_id }).count
+
+  if existing_count >= matching_category.max_items
+    redirect_to("/recommendations")
+    return
+  end
+
+  rec               = Recommendation.new
+  rec.name          = the_name
+  rec.description   = the_description
+  rec.category_id   = the_category_id
+  rec.user_id       = current_user.id
+  rec.save
+
+  redirect_to("/recommendations/#{rec.id}")
+  return
+end
+   def show
+    the_id                  = params.fetch("path_id")
     matching_recommendations = Recommendation.where({ :id => the_id })
-
-    @the_recommendation = matching_recommendations.at(0)
+    @the_recommendation     = matching_recommendations.at(0)
 
     render({ :template => "recommendations/show" })
   end
-
-  def create
-    the_recommendation = Recommendation.new
-    the_recommendation.user_id = params.fetch("query_user_id")
-    the_recommendation.category_id = params.fetch("query_category_id")
-    the_recommendation.name = params.fetch("query_name")
-    the_recommendation.description = params.fetch("query_description")
-
-    if the_recommendation.valid?
-      the_recommendation.save
-      redirect_to("/recommendations", { :notice => "Recommendation created successfully." })
-    else
-      redirect_to("/recommendations", { :alert => the_recommendation.errors.full_messages.to_sentence })
-    end
-  end
-
-  def update
+    def destroy
     the_id = params.fetch("path_id")
     the_recommendation = Recommendation.where({ :id => the_id }).at(0)
-
-    the_recommendation.user_id = params.fetch("query_user_id")
-    the_recommendation.category_id = params.fetch("query_category_id")
-    the_recommendation.name = params.fetch("query_name")
-    the_recommendation.description = params.fetch("query_description")
-
-    if the_recommendation.valid?
-      the_recommendation.save
-      redirect_to("/recommendations/#{the_recommendation.id}", { :notice => "Recommendation updated successfully."} )
-    else
-      redirect_to("/recommendations/#{the_recommendation.id}", { :alert => the_recommendation.errors.full_messages.to_sentence })
-    end
-  end
-
-  def destroy
-    the_id = params.fetch("path_id")
-    the_recommendation = Recommendation.where({ :id => the_id }).at(0)
-
     the_recommendation.destroy
-
     redirect_to("/recommendations", { :notice => "Recommendation deleted successfully."} )
   end
+  private
+
+  def load_categories
+    @categories = Category.all
+  end
+
+
 end

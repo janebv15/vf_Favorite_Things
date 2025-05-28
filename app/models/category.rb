@@ -4,6 +4,7 @@
 #
 #  id                    :bigint           not null, primary key
 #  favorite_things_count :integer
+#  max_items             :integer
 #  name                  :text
 #  created_at            :datetime         not null
 #  updated_at            :datetime         not null
