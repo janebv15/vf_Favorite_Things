@@ -1,12 +1,29 @@
 
 
-<h1>Explore your friends favorite things</h1>
+<h1>Explore some favorite things</h1>
 
-Want to explore something in particular? 
-[add a filter for by category]
-[add a search field for a specific friend]
+Want to explore something in particular? Choose a category or find a friend to explore what they enjoy.
+ <form action="/feeds" method="get">
+   <label for="username_search">User:</label>
+   <select id="username_search" name="username">
+     <option value="">All Users</option>
+     <% User.all.each do |user| %>
+       <option value="<%= user.username %>" <%= "selected" if params.fetch("username", "") == user.username %>><%= user.username %></option>
+     <% end %>
+   </select>
 
-<table border="4">
+   <label for="category_select">Category:</label>
+   <select id="category_select" name="category_id">
+     <option value="">All Categories</option>
+     <% Category.all.each do |cat| %>
+       <option value="<%= cat.id %>" <%= "selected" if params.fetch("category_id", "") == cat.id.to_s %>><%= cat.name %></option>
+     <% end %>
+   </select>
+
+   <button type="submit">Filter</button>
+ </form>
+
+<table border="1">
   <thead>
     <tr>
       <th>Username</th>
