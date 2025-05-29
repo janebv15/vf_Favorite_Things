@@ -41,4 +41,8 @@ class HomeController < ApplicationController
   render({ :template => "home/profile" })
 end
 
+def filter
+    render({ :template => "home/filter" })
+end
+
 end

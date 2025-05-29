@@ -1,4 +1,6 @@
-<h1> Insert name's favorite things </h1>
+<h1> <%= current_user.username%>'s favorite things </h1>
+<%= current_user.bio%>
+<%= current_user.upload_image%>
 upload image
 current user Bio
 
@@ -15,7 +17,8 @@ list of favorite things by lists with descriptions
     </tr>
   </thead>
   <tbody>
-
+<td>Pipe in tv show name</td>
+<td>Pipe in tv show description</td>
   </tbody>
 </table>
 

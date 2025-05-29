@@ -81,4 +81,10 @@ Rails.application.routes.draw do
   :as         => "profile" 
 })
 
+#filter table
+  get("/feeds", { 
+  :controller => "home", 
+  :action     => "filter"
+})
+
 end
