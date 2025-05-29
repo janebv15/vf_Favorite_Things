@@ -39,7 +39,7 @@ def self.ransackable_attributes(auth_object = nil)
          :description    => recommendation.description,
        }
       end
-      
+
     render({ :template => "home/feed" })
   end
 
@@ -53,5 +53,20 @@ def self.ransackable_attributes(auth_object = nil)
 def filter
     render({ :template => "home/filter" })
 end
+
+   def edit_profile
+     @user = current_user
+     render({ :template => "home/edit_profile" })
+   end
+
+   def update_profile
+     @user              = current_user
+     @user.username     = params.fetch("username")
+     @user.bio          = params.fetch("bio")
+     @user.upload_image = params.fetch("upload_image")
+     @user.save
+
+     redirect_to(profile_path(@user.id))
+   end
 
 end

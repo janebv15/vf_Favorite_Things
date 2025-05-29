@@ -1,0 +1,24 @@
+ <h1>Edit Your Profile</h1>
+
+ <form action="/profile/update" method="post">
+   <label for="username_field">Username</label><br>
+   <input
+     id="username_field"
+     type="text"
+     name="username"
+     value="<%= @user.username %>"
+   ><br><br>
+
+   <label for="bio_field">Bio</label><br>
+   <textarea id="bio_field" name="bio"><%= @user.bio %></textarea><br><br>
+
+   <label for="upload_image_field">Image URL</label><br>
+   <input
+     id="upload_image_field"
+     type="text"
+     name="upload_image"
+     value="<%= @user.upload_image %>"
+   ><br><br>
+
+   <input type="submit" value="Save Changes">
+ </form>

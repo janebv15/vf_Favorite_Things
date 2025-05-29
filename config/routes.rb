@@ -73,18 +73,25 @@ Rails.application.routes.draw do
   root to: "home#index"
   
 
-  # profile
 
-  get("/profile/:user_id", { 
-  :controller => "home", 
-  :action     => "profile", 
-  :as         => "profile" 
-})
 
 #filter table
   get("/feeds", { 
   :controller => "home", 
   :action     => "filter"
+})
+
+#edit profile
+ get("/profile/edit",  { :controller => "home", :action => "edit_profile" })
+ post("/profile/update",{ :controller => "home", :action => "update_profile" })
+
+
+   # profile
+
+  get("/profile/:user_id", { 
+  :controller => "home", 
+  :action     => "profile", 
+  :as         => "profile" 
 })
 
 end
