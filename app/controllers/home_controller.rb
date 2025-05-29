@@ -30,7 +30,16 @@ def self.ransackable_attributes(auth_object = nil)
         :description => recommendation.description,
       }
     end
-
+@feed_items = recommendations.map do |recommendation|
+       {
+         :user_id        => recommendation.user.id,
+         :username       => recommendation.user.username,
+         :category_name  => recommendation.category.name,
+         :favorite_thing => recommendation.name,
+         :description    => recommendation.description,
+       }
+      end
+      
     render({ :template => "home/feed" })
   end
 
