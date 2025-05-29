@@ -1,6 +1,15 @@
 <h1><%= @user.username %>'s favorite things</h1>
-<%= @user.upload_image %>
-
+<div>
+<% if @user.upload_image.present? %>
+  <img
+    src="<%= @user.upload_image %>"
+    alt="<%= @user.username %>'s profile picture"
+    style="max-width:200px; max-height:200px;"
+  >
+<% else %>
+  <p>No profile image set yet.</p>
+<% end %>
+</div>
 <%= @user.bio %>
 <div>  </div>
 <div>
