@@ -2,17 +2,14 @@
 
 <%= link_to 'Add a favorite thing', recommendations_path, class: "nav-link" %>
 
-<p>Current user id: <%= current_user.id %></p>
-<p>Total loaded recommendations for this user: <%= @user_recommendations.count %></p>
 
 <% @categories.each do |category| %>
-  <h2><%= category.name %> (id: <%= category.id %>)</h2>
+  <h2><%= category.name %></h2>
 
   <% recs = @user_recommendations.where({ :category_id => category.id }) %>
-  <p>→ recs.count for this category: <%= recs.count %></p>
-
+ 
   <% if recs.count > 0 %>
-    <table border="0">
+    <table border="1">
       <thead>
         <tr>
           <th><%= category.name.singularize %></th>
