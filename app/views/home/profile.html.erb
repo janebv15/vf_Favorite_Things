@@ -1,29 +1,34 @@
-<h1> <%= current_user.username%>'s favorite things </h1>
-<%= current_user.bio%>
-<%= current_user.upload_image%>
-upload image
-current user Bio
+<h1><%= @user.username %>'s favorite things</h1>
 
 <%= link_to 'Add a favorite thing', recommendations_path, class: "nav-link" %>
 
-list of favorite things by lists with descriptions
-<h2>TV Shows</h2>
+<p>Current user id: <%= current_user.id %></p>
+<p>Total loaded recommendations for this user: <%= @user_recommendations.count %></p>
 
-<table border="0">
-  <thead>
-    <tr>
-      <th>TV Show</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-<td>Pipe in tv show name</td>
-<td>Pipe in tv show description</td>
-  </tbody>
-</table>
+<% @categories.each do |category| %>
+  <h2><%= category.name %> (id: <%= category.id %>)</h2>
 
-<h2>Songs</h2>
-<h2>Vacations</h2>
-<h2>Books</h2>
-<h2>Movies</h2>
-<h2>Misc</h2>
+  <% recs = @user_recommendations.where({ :category_id => category.id }) %>
+  <p>→ recs.count for this category: <%= recs.count %></p>
+
+  <% if recs.count > 0 %>
+    <table border="0">
+      <thead>
+        <tr>
+          <th><%= category.name.singularize %></th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% recs.each do |rec| %>
+          <tr>
+            <td><%= rec.name %></td>
+            <td><%= rec.description %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No recommendations yet in this category.</p>
+  <% end %>
+<% end %>

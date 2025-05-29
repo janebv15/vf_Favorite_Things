@@ -87,6 +87,7 @@ gem "simple_form"
 gem "carrierwave"
 gem "openai-chat"
 gem "faker"
+gem "ransack"
 
 group :development do
   gem "annotate"

@@ -15,4 +15,5 @@ class Recommendation < ApplicationRecord
   belongs_to :user, required: true, class_name: "User", foreign_key: "user_id"
   belongs_to :category, required: true, class_name: "Category", foreign_key: "category_id", counter_cache: :favorite_things_count
 validates :category_id, presence: true
+
 end

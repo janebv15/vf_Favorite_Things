@@ -75,7 +75,7 @@ Rails.application.routes.draw do
 
   # profile
 
-  get("/profile/:id", { 
+  get("/profile/:user_id", { 
   :controller => "home", 
   :action     => "profile", 
   :as         => "profile" 

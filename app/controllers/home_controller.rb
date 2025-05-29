@@ -2,6 +2,11 @@ class HomeController < ApplicationController
   def index
     recommendations = Recommendation.all.order({ :created_at => :desc })
 
+def self.ransackable_attributes(auth_object = nil)
+    # Let's allow filtering by the title and year columns; but no others
+    ["title", "year"]
+  end
+    
     # filter by username
     username_search = params.fetch("username_search", "")
     if username_search != ""
@@ -29,17 +34,12 @@ class HomeController < ApplicationController
     render({ :template => "home/feed" })
   end
 
- def profile
- #   @user = User.where({ "id" => params.fetch("user_id") }).at(0)
-  #  @category = Category.where({ "id" => params.fetch("category_id") }).at(0)
-
-   # @recommendations = Recommendation.
-    #  where({ :user_id     => @user.id,
-     #         :category_id => @category.id }).
-      #order({ :created_at  => :desc })
-
-  render({ :template => "home/profile" })
-end
+  def profile
+     @user                 = User.where({ :id => params.fetch("user_id") }).at(0)
+     @categories           = Category.all
+     @user_recommendations = Recommendation.where({ :user_id => @user.id })
+     render({ :template => "home/profile" })
+   end
 
 def filter
     render({ :template => "home/filter" })
